@@ -1,17 +1,12 @@
+CC = gcc
+CFLAGS = -Wall -Wextra
 
-# Primeira regra/acao do make
-# Podia ter qualquer outro nome, mas o make corre sempre a primeira regra caso nada seja definido a seguir no comando 
-# (eg: make run nao corre istp)
-# Abaixo definimos acoes que o "all" precisa que sejam executadas para que este acabe
-all: central #estafeta gerador
+all: central
 
-# Nome acao
-program: central.c # Nome ficheiro (so corre se este mesmo mudar)
-	gcc central.c -o central 
-# ^ Comandos acossiados
+central: central.c estrutura.h
+	$(CC) $(CFLAGS) central.c -o central
 
-# Acoes que correm sempre que sao chamadas
-#.PHONY: run -- Nao foi necessario
+clean:
+	rm -f central *.o
 
-run: central
-	./central
+.PHONY: all clean

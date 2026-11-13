@@ -8,7 +8,7 @@ O que faz: Centraliza os dados partilhados.
 O que precisa de ter:
 Constantes com os valores por omissão (`PRAZOACEITA`, `MAXESTAFETAS`, etc).
 A `struct` da Central (para guardar as configurações lidas no arranque).
-A `struct` das mensagens, garantindo que o primeiro campo é o `char tipo\[12]`.
+A `struct` das mensagens, garantindo que o primeiro campo é o `char tipo[12]`.
 
 ## central.c (O único que trabalha nesta fase)
 O que faz: Gere a consola e o tarifador.

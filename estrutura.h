@@ -1,40 +1,47 @@
 #ifndef ESTRUTURA_H
 #define ESTRUTURA_H
 
-#define MAX_ESTAFETAS 10  // estafetas padrão
-#define PRAZO_ACEITA  30 // prazo em segundos até expirar
-#define DEFAULT_BINDIR        "."  // diretoria atual
+// valores por defeito
+#define MAX_ESTAFETAS 10
+#define PRAZO_ACEITA  30
+#define DEFAULT_BINDIR "."
 
-// se este ficheiro existe em tmp entao o program está aberto
-#define LOCK_FILE             "/tmp/entrega_so_central.lock"
+// ficheiro para garantir uma so central a correr
+#define LOCK_FILE "/tmp/entrega_so_central.lock"
 
 #define TAM_TIPO  12
 #define TAM_CORPO 50
+#define TAM_NOME  16
+#define TAM_LOCAL 16
 #define TAM_MAX   256
 
+// cabecalho comum a todas as mensagens
 typedef struct {
     char tipo[TAM_TIPO];
-} Cabecalho;
+} cabecalho;
 
+// mensagem enviada pelo gerador
 typedef struct {
     char tipo[TAM_TIPO];
     char corpo[TAM_CORPO];
-} Pedido;
+} msg_pedido;
 
-// registo de um novo estafeta
+// registo de um estafeta
 typedef struct {
     char tipo[TAM_TIPO];
-    char nome[TAM_CORPO];
+    char nome[TAM_NOME];
     char fifo_in[TAM_MAX];
     char fifo_out[TAM_MAX];
-} RegistoEst;
+} msg_registo;
 
+// configuracoes da central
 typedef struct {
     int max_estafetas;
     int prazo_aceita;
     char bindir[TAM_MAX];
-} Configs;
+} configs;
 
+// estatisticas pedidas no comando stats
 typedef struct {
     int recebidos;
     int atribuidos;
@@ -42,6 +49,6 @@ typedef struct {
     int expirados;
     int perdidos;
     double valor_total;
-} Estados;
+} estatisticas;
 
 #endif
