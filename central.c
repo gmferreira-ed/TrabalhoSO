@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
         close(pipe_recebe[1]);
 
         char caminho[TAM_MAX];
-        sprintf(caminho, "%s/tarifador", cfg.bindir);
+        snprintf(caminho, sizeof(caminho), "%s/tarifador", cfg.bindir);
         execl(caminho, "tarifador", NULL);
 
         perror("Erro ao executar tarifador");
