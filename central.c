@@ -11,7 +11,8 @@
 int fd_lock = -1;
 int pid_tarifador = -1;
 int pipe_envia[2];  // central -> tarifador
-int pipe_recebe[2]; // tarifador -> central
+int pipe_recebe[2]; // tarifador -> centrale
+estatisticas stats = {0, 0, 0, 0, 0, 0.0};
 
 void fecha_tudo() {
     // fecha pipes para avisar o tarifador a terminar
@@ -47,7 +48,6 @@ void trata_sigint(int s) {
 
 int main(int argc, char *argv[]) {
     configs cfg;
-    estatisticas stats = {0, 0, 0, 0, 0, 0.0};
 
     // valores padrao
     cfg.max_estafetas = MAX_ESTAFETAS;
@@ -165,11 +165,12 @@ int main(int argc, char *argv[]) {
                     buffer[n] = '\0';
                     float dist, valor;
                     if (sscanf(buffer, "%f %f", &dist, &valor) == 2) {
-                        stats.recebidos++;
-                        printf("Tarifador: distancia=%.2f km, valor=%.2f euros\n", dist, valor);
-                    } else {
-                        printf("Erro ao interpretar resposta do tarifador!\n");
-                    }
+    stats.recebidos++;
+    stats.valor_total += valor;
+    printf("Tarifador: distancia=%.2f km, valor=%.2f euros\n", dist, valor);
+} else {
+    printf("DEBUG ERRO: string recebida foi [%s]\n", buffer);
+}
                 } else {
                     printf("Erro ao ler resposta do tarifador!\n");
                 }
